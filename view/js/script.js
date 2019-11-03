@@ -18,8 +18,7 @@ function validateInputs() {
         errorDisplay.setAttribute('style', 'display:block!important;');
     } else {
         storeValues();
-        renderHTML();
-        clearInputs()
+        clearInputs();
         errorDisplay.setAttribute('style', 'display:hidden!important;');
     }
 }
@@ -52,7 +51,7 @@ function storeValues() {
     email: document.getElementById('email').value
 }
     window.localStorage.setItem('contacts', JSON.stringify(contactList));
-
+    renderHTML();
 }
 
 function renderHTML() {
@@ -75,17 +74,18 @@ function clearInputs() {
 }
 
 function sort() {
-var contacts = [
+    console.log(getContacts)
+var inSort = [
     { name: 'name', value: getContacts.name},
     { name: 'mobile', value: getContacts.mobile},
     { name: 'email', value: getContacts.email}
 ];
-console.log(contacts)
-contacts.sort(function (a, b) {
+console.log(inSort)
+inSort.sort(function (a, b) {
   return a.value - b.value;
 });
 
-contacts.sort(function(a, b) {
+inSort.sort(function(a, b) {
   var nameA = a.name.toUpperCase(); // ignore upper and lowercase
   var nameB = b.name.toUpperCase(); // ignore upper and lowercase
   if (nameA < nameB) {
@@ -97,8 +97,7 @@ contacts.sort(function(a, b) {
 
   // names must be equal
   return 0;
-
 });
-   
-
+window.localStorage.setItem('contacts', JSON.stringify(inSort));
+renderHTML();
 }
