@@ -10,14 +10,13 @@ function validateInputs() {
     var errorDisplay = document.getElementById('error');
     
     if (validateName() === false || validateMobile() === false || validateEmail() === false) {
-        errorDisplay.setAttribute('style', 'display:block;');
+        errorDisplay.setAttribute('style', 'display:block!important;');
     } else {
         addContact();
+        errorDisplay.setAttribute('style', 'display:hidden!important;');
         document.getElementById("name").value = '';
         document.getElementById("mobile").value = '';
         document.getElementById("email").value = '';
-        errorDisplay.setAttribute('style', 'display:hidden;');
-        console.log("success");
     }
 
 }
@@ -57,11 +56,13 @@ function addContact() {
     var mobileCell = row.insertCell(1);
     var emailCell = row.insertCell(2);
 
-    nameCell.innerHTML = sessionStorage.Name;
-    mobileCell.innerHTML = sessionStorage.Mobile;
-    emailCell.innerHTML = sessionStorage.Email;
+    nameCell.textContent = sessionStorage.Name;
+    mobileCell.textContent = sessionStorage.Mobile;
+    emailCell.textContent = sessionStorage.Email;
 };
 
 function sort() {
-    // build this
+console.log(sessionStorage);
+sessionStorage.sort();
+console.log(sessionStorage);
 }
