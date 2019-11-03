@@ -1,24 +1,22 @@
 // JS code goes here
-document.getElementById("submit").addEventListener("click", validateInput);
+var firstName = document.getElementById('name').value;
+var mobile = document.getElementById('mobile').value;
+var email = document.getElementById('email').value;
+var nameRegex = new RegExp('[A-Za-z_]');
+var mobileRegex = new RegExp('^[0-9]{1,10}$');
+var emailRegex = new RegExp('@');
+
+
+
+
+document.getElementById("submit").addEventListener("click", validateInputs);
 document.getElementById("nameColumn").addEventListener("click", sort);
 
-function validateInput() {
-    var disp = document.getElementById('error');
-    var fName = document.getElementById('name').value;
-    var fMobile = document.getElementById('mobile').value;
-    var fEmail = document.getElementById('email').value;
 
-    var nameRegex = new RegExp('[A-Za-z_]');
-    var mobileRegex = new RegExp('^[0-9]{1,10}$');
-    var emailRegex = new RegExp('@');
+function validateInputs() {
+    var errorDisplay = document.getElementById('error');
 
-    var result1 = nameRegex.test(fName);
-    var result2 = mobileRegex.test(fMobile);
-    var result3 = emailRegex.test(fEmail);
-
-    console.log(result1 + " " + result2 + " " + result3)
-
-    if (result1 === false || result2 === false || result3 === false) {
+    if (validateName() === false || validateMobile() === false || validateEmail() === false) {
         disp.setAttribute('style', 'display:block;');
     } else {
         addContact();
@@ -29,6 +27,27 @@ function validateInput() {
         console.log("success");
     }
 
+}
+
+function validateName() {
+ if(nameRegex.test(firstName) === false)
+    return false;
+else
+    return true;
+}
+
+function validateMobile() {
+     if(mobileRegex.test(mobile) === false)
+    return false;
+else
+    return true;
+}
+
+function validateEmail() {
+     if(emailRegex.test(email) === false)
+    return false;
+else
+    return true;
 }
 
 function addContact() {
