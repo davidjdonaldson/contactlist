@@ -1,24 +1,27 @@
-// JS code goes here
-var nameRegex = new RegExp('[A-Za-z_]');
-var mobileRegex = new RegExp('^[0-9]{1,10}$');
-var emailRegex = new RegExp('@');
+const nameRegex = new RegExp('[A-Za-z_]');
+const mobileRegex = new RegExp('^[0-9]{1,10}$');
+const emailRegex = new RegExp('@');
+var errorDisplay = document.getElementById('error');
+var table = document.getElementById("summaryTable");
+var row = table.insertRow(1);
+var nameCell = row.insertCell(0);
+var mobileCell = row.insertCell(1);
+var emailCell = row.insertCell(2);
+var getContacts 
 
 document.getElementById("submit").addEventListener("click", validateInputs);
 document.getElementById("nameColumn").addEventListener("click", sort);
 
 function validateInputs() {
-    var errorDisplay = document.getElementById('error');
     
     if (validateName() === false || validateMobile() === false || validateEmail() === false) {
         errorDisplay.setAttribute('style', 'display:block!important;');
     } else {
-        addContact();
+        storeValues();
+        renderHTML();
+        clearInputs()
         errorDisplay.setAttribute('style', 'display:hidden!important;');
-        document.getElementById("name").value = '';
-        document.getElementById("mobile").value = '';
-        document.getElementById("email").value = '';
     }
-
 }
 
 function validateName() {
@@ -42,24 +45,35 @@ if(emailRegex.test(email) === true)
 return false;
 }
 
-function addContact() {
-    sessionStorage.setItem('Name', document.getElementById('name').value);
-    sessionStorage.setItem('Mobile', document.getElementById('mobile').value);
-    sessionStorage.setItem('Email', document.getElementById('email').value);
+function storeValues() {
+    var contactList = {
+    name: document.getElementById('name').value,
+    mobile: document.getElementById('mobile').value,
+    email: document.getElementById('email').value
+}
+    window.localStorage.setItem('contacts', JSON.stringify(contactList));
 
-    var table = document.getElementById("summaryTable");
-    var row = table.insertRow(1);
-    var nameCell = row.insertCell(0);
-    var mobileCell = row.insertCell(1);
-    var emailCell = row.insertCell(2);
+}
 
-    nameCell.textContent = sessionStorage.Name;
-    mobileCell.textContent = sessionStorage.Mobile;
-    emailCell.textContent = sessionStorage.Email;
+function renderHTML() {
+    getContacts = JSON.parse(localStorage.getItem('contacts'));
+    table = document.getElementById("summaryTable");
+    row = table.insertRow(1);
+    nameCell = row.insertCell(0);
+    mobileCell = row.insertCell(1);
+    emailCell = row.insertCell(2);
+
+    nameCell.textContent = getContacts.name;
+    mobileCell.textContent = getContacts.mobile;
+    emailCell.textContent = getContacts.email;
 };
 
+function clearInputs() {
+    document.getElementById("name").value = '';
+    document.getElementById("mobile").value = '';
+    document.getElementById("email").value = '';
+}
+
 function sort() {
-console.log(sessionStorage);
-sessionStorage.sort();
-console.log(sessionStorage);
+console.log(name);
 }
