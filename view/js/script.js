@@ -75,5 +75,30 @@ function clearInputs() {
 }
 
 function sort() {
-console.log(name);
+var contacts = [
+    { name: 'name', value: getContacts.name},
+    { name: 'mobile', value: getContacts.mobile},
+    { name: 'email', value: getContacts.email}
+];
+console.log(contacts)
+contacts.sort(function (a, b) {
+  return a.value - b.value;
+});
+
+contacts.sort(function(a, b) {
+  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  // names must be equal
+  return 0;
+
+});
+   
+
 }
