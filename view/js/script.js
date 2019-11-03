@@ -25,24 +25,21 @@ function validateName() {
 var firstName = document.getElementById('name').value;
  if(nameRegex.test(firstName) === true)
     return true;
-else
-    return false;
+return false;
 }
 
 function validateMobile() {
 var mobile = document.getElementById('mobile').value;
 if(mobileRegex.test(mobile) === true)
     return true;
-else
-    return false;
+return false;
 }
 
 function validateEmail() {
 var email = document.getElementById('email').value;
 if(emailRegex.test(email) === true)
     return true;
-else
-    return false;
+return false;
 }
 
 function addContact() {
