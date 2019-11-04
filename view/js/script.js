@@ -7,7 +7,7 @@ var row = table.insertRow(1);
 var nameCell = row.insertCell(0);
 var mobileCell = row.insertCell(1);
 var emailCell = row.insertCell(2);
-var allContacts = []
+var allContacts
 
 document.getElementById("submit").addEventListener("click", validateInputs);
 document.getElementById("nameColumn").addEventListener("click", sort);
@@ -47,8 +47,7 @@ return false;
 
 function addContact() {
     var existingContacts = JSON.parse(localStorage.getItem('allContacts'));
-    if(existingContacts == null) 
-        existingContacts = [];
+    if(existingContacts == null) existingContacts = [];
     var name = document.getElementById('name').value;
     var mobile = document.getElementById('mobile').value;
     var email = document.getElementById('email').value;
@@ -57,22 +56,21 @@ function addContact() {
         "mobile": mobile,
         "email": email
     };
+
     localStorage.setItem("contact", JSON.stringify(contact));
     // Append existing entries back
-    allContacts.push(contact);
-    localStorage.setItem("existingContacts", JSON.stringify(allContacts));
+    existingContacts.push(contact);
+    localStorage.setItem("allContacts", JSON.stringify(existingContacts));
 }
 
 function render() {
-    var getContacts = JSON.parse(localStorage.getItem('allContacts'));
+    var getContacts = JSON.parse(localStorage.getItem('allContacts') || []);
     var input = '';
     for (var i = 0; i < getContacts.length; i++) {
-           console.log(getContacts);
-           input = '<tr><th>' + getContacts.name + '</th><th>' + getContacts.mobile + '</th><th>' + getContacts.email + '</th></tr>';
+           input = '<table id="summaryTable"><thead><tr><th id="nameColumn">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody><tr><th>' + allContacts.name + '</th><th>' + allContacts.mobile + '</th><th>' + allContacts.email + '</th></tr></tbody></table>';
        }
-
-console.log(input);
-
+       document.getElementById("summaryTable").innerHTML = input;
+       console.log(getContacts.name);
 
     // table = document.getElementById("summaryTable");
     // row = table.insertRow(1);
