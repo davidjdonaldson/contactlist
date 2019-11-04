@@ -50,51 +50,39 @@ function validateEmail() {
 function addContact() {
     var existingContacts = JSON.parse(localStorage.getItem('allContacts'));
     if (existingContacts == null) existingContacts = [];
-    var name = document.getElementById('name').value;
-    var mobile = document.getElementById('mobile').value;
-    var email = document.getElementById('email').value;
-    var contact = {
-        "name": name,
-        "mobile": mobile,
-        "email": email
+   
+    var newContact = {
+        "name": document.getElementById('name').value,
+        "mobile": document.getElementById('mobile').value,
+        "email": document.getElementById('email').value
     };
-    localStorage.setItem("contact", JSON.stringify(contact));
-    // Append existing entries back
-    existingContacts.push(contact);
+    existingContacts = existingContacts.concat(newContact);
     localStorage.setItem("allContacts", JSON.stringify(existingContacts));
+
 }
 
 function render() {
-    var parsedContact = JSON.parse(localStorage.getItem('allContacts') || []);
-
-    parsedContact.forEach(function(contact) {
-        document.getElementById('trBody').insertAdjacentHTML('afterend', '<th>' + contact.name + '</th><th>' + contact.mobile + '</th><th>' + contact.email + '</th>');
-    });
+    var parsedContact = JSON.parse(localStorage.getItem("allContacts"));
+    if(parsedContact === null) {
+        console.log('no contacts');
+    } else {
+    for (var i = 0, len = parsedContact.length; i < len; i++) {
+        document.getElementById('trBody').insertAdjacentHTML('afterend', '<th>' + parsedContact.name + '</th><th>' + parsedContact.mobile + '</th><th>' + parsedContact.email + '</th>');
+     };
+    }
 };
 
 function clearInputs() {
     document.getElementById("name").value = '';
     document.getElementById("mobile").value = '';
     document.getElementById("email").value = '';
+    localStorage.clear();
 }
 
 function sort() {
-    //Logic here is bad, need to fix this
-    var sortItems = JSON.parse(localStorage.getItem('allContacts'));
-    sortItems.sort();
-    console.log('sortItems');
-    if (sortItems == null) sortItems = [];
-    var name = document.getElementById('name').value;
-    var mobile = document.getElementById('mobile').value;
-    var email = document.getElementById('email').value;
-    var contact = {
-        "name": name,
-        "mobile": mobile,
-        "email": email
-    };
-    localStorage.setItem("contact", JSON.stringify(contact));
-    
-    sortItems.push(contact);
-    localStorage.setItem("allContacts", JSON.stringify(sortItems));
-    render();
+    var numbers = [4, 2, 5, 1, 3];
+numbers.sort(function(a, b) {
+  return a - b;
+});
+console.log(numbers);    
 }
