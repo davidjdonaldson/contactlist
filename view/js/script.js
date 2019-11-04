@@ -64,28 +64,15 @@ function addContact() {
 }
 
 function render() {
-    var getContacts = JSON.parse(localStorage.getItem('allContacts') || []);
+    var parsedContact = JSON.parse(localStorage.getItem('allContacts') || []);
     var input = '';
-    for (var i = 0; i < getContacts.length; i++) {
-           input = '<table id="summaryTable"><thead><tr><th id="nameColumn">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody><tr><th>' + allContacts.name + '</th><th>' + allContacts.mobile + '</th><th>' + allContacts.email + '</th></tr></tbody></table>';
-       }
-       document.getElementById("summaryTable").innerHTML = input;
-       console.log(getContacts.name);
 
-    // table = document.getElementById("summaryTable");
-    // row = table.insertRow(1);
-    // nameCell = row.insertCell(0);
-    // mobileCell = row.insertCell(1);
-    // emailCell = row.insertCell(2);
-
-    // nameCell.textContent = getContacts.name;
-    // mobileCell.textContent = getContacts.mobile;
-    // emailCell.textContent = getContacts.email;
-
-    // const function getContacts() {
-    //     for (var i = 0; i < localStorage.length i++) {
-    //         console.log(localStorage)
-    // }
+    parsedContact.forEach(function(contact) {
+        console.log(contact.name);
+        input = '<tr><th>' + contact.name + '</th><th>' + contact.mobile + '</th><th>' + contact.email + '</th></tr>';
+});
+    console.log(input);
+    document.getElementById("summaryTable").innerHTML = '<table id="summaryTable"><thead><tr><th id="nameColumn">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody>' + input + '</tbody></table>';
 };
 
 function clearInputs() {
