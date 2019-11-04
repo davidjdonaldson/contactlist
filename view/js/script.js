@@ -6,7 +6,7 @@ const errorDisplay = document.getElementById('error');
 document.getElementById('contactSummary').insertAdjacentHTML('afterend', '<table id="contactsTable"><thead><tr><th id="nameFilter">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody><tr id="trBody">');
 document.getElementById('trBody').insertAdjacentHTML('beforeend', '</tr></tbody></table>');
 
-var allContacts
+var allContacts = window.localStorage;
 
 //Displaying the existing contact list saved in local storage
 render()
@@ -48,7 +48,7 @@ function validateEmail() {
 }
 
 function addContact() {
-    var existingContacts = JSON.parse(localStorage.getItem('allContacts'));
+    var existingContacts = JSON.parse(localStorage.getItem(allContacts));
     if (existingContacts == null) existingContacts = [];
    
     var newContact = {
@@ -56,19 +56,18 @@ function addContact() {
         "mobile": document.getElementById('mobile').value,
         "email": document.getElementById('email').value
     };
-    existingContacts = existingContacts.concat(newContact);
-    localStorage.setItem("allContacts", JSON.stringify(existingContacts));
-
+    existingContacts.push(newContact);
+    localStorage.setItem(allContacts, JSON.stringify(existingContacts));
 }
 
 function render() {
-    var parsedContact = JSON.parse(localStorage.getItem("allContacts"));
+    var parsedContact = JSON.parse(localStorage.getItem(allContacts));
     if(parsedContact === null) {
         console.log('no contacts');
     } else {
-    for (var i = 0, len = parsedContact.length; i < len; i++) {
-        document.getElementById('trBody').insertAdjacentHTML('afterend', '<th>' + parsedContact.name + '</th><th>' + parsedContact.mobile + '</th><th>' + parsedContact.email + '</th>');
-     };
+    parsedContact.forEach(function(contact) {
+        document.getElementById('trBody').insertAdjacentHTML('afterend', '<th>' + contact.name + '</th><th>' + contact.mobile + '</th><th>' + contact.email + '</th>');
+     });
     }
 };
 
