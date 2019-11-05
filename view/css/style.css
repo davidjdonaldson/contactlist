@@ -1,12 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Cardo:400,700|Source+Sans+Pro:300,400&display=swap');
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    background: #efefef;
+    background: url("https://tinyurl.com/y2lm3k5c") center center no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .error {
-  color: red;
+  color: #e5e5e4;
   display: none!important;
 }
 
 input {
-  padding: 5px;
-  font-size: 12px;
+  font-family: 'Source Sans Pro', sans-serif;
+  padding: 18px;
+  margin: 5px;
+  width: 350px;
+  font-size: 16px;
+  border-width: 1px;
+  border-style:solid;
+  border-color: #e5e5e4;
+  border-image: initial;
 }
+
 li {
   list-style: none;
 }
@@ -27,12 +46,19 @@ li {
   margin-bottom: 20px;
 }
 .btn {
-  padding: 5px;
-  border-radius: 5px;
-  background: white;
+  width: 390px;
+  padding: 11px 20px;
+  color: #fff;
+  background: #11939a;
 }
 .btn:hover {
+  background: #107c82;
   cursor: pointer;
+  -webkit-transition: background-color 0.5s ease-out;
+  -moz-transition: background-color 0.5s ease-out;
+  -o-transition: background-color 0.5s ease-out;
+  transition: background-color 0.5s ease-out;
+  
 }
 button:active {
   outline: none;
@@ -40,8 +66,8 @@ button:active {
 }
 
 .fs20 {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 40px;
+  color: #fff
 }
 .fb {
   font-weight: bold;
@@ -92,7 +118,10 @@ input:focus {
   margin-top: 20px;
 }
 .txtLeft {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-evenly;
 }
 .padT10 {
   padding-top: 10px;
@@ -102,23 +131,24 @@ input:focus {
   border-radius: 10px;
 }
 .tab {
-  font-weight: bold;
+  font-size: 30px;
+  color: #fff;
   padding: 5px 25px;
 }
 
 .inputContent {
-  background: lightblue;
-  border: 2px solid #025773;
-  padding: 0px 20px;
-  display: inline-block;
-  border-radius: 12px;
+background-color:#f8f8f9;
+border: solid 1px #e5e5e4;
+padding:32px
 }
 
 .contactSummary {
   max-width: 90%;
 }
 table, th, td {
-  border: 1px solid black;
+  border-width: 1px;
+  border-style:solid;
+  border-color: #e5e5e4;
   border-collapse: collapse;
 }
 th, td {
@@ -129,8 +159,14 @@ th, td {
 tbody tr:nth-child(odd) {
   background-color: #f2f2f2;
 }
+tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+th {
+  background-color: #fff;
+}
 
 #summaryTable {
   display:none;
 }
-
