@@ -1,28 +1,48 @@
 const nameRegex = new RegExp('[A-Za-z_]');
 const mobileRegex = new RegExp('^[0-9]{1,10}$');
 const emailRegex = new RegExp('@');
-const errorDisplay = document.getElementById('error');
+
 // Setting up the table here because it was generating multiple tables on the render method each time it was called.
-document.getElementById('contactSummary').insertAdjacentHTML('afterend', '<table id="contactsTable"><thead><tr><th id="nameFilter">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody><tr id="trBody">');
+document.getElementById('contactSummary').insertAdjacentHTML('afterend', '<table id="contactsTable"><thead><tr><th id="nameFilter">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody id="rowBody"><tr id="trBody">');
 document.getElementById('trBody').insertAdjacentHTML('beforeend', '</tr></tbody></table>');
 
-var allContacts = window.localStorage;
+var allContactsKey = 'allContacts'
 
 //Displaying the existing contact list saved in local storage
-render()
+
 
 //Waiting for clicks
-document.getElementById("submit").addEventListener("click", validateInputs);
+document.getElementById("submit").addEventListener("click", submit);
 document.getElementById("nameFilter").addEventListener("click", sort);
+
+function submit() {
+    if(validateInputs()) {
+        addContact(); // TODO: need to pass in the validated new contact
+        clearInputs();
+        render();
+    }
+    else {
+        displayError('There was a validation error'); // TODO: Add error message function, and pass it a message
+    }
+}
+
+function displayError(message) {
+    const errorDisplay = document.getElementById('error');
+    errorDisplay.setAttribute('style', 'display:block!important;');
+    errorDislay.textContent = message;
+
+}
 
 function validateInputs() {
     if (validateName() === false || validateMobile() === false || validateEmail() === false) {
-        errorDisplay.setAttribute('style', 'display:block!important;');
+        return false;
+        // 
     } else {
-        addContact();
-        clearInputs();
-        render();
+        const errorDisplay = document.getElementById('error'); 
         errorDisplay.setAttribute('style', 'display:hidden!important;');
+
+        return true;
+
     }
 }
 
@@ -48,25 +68,36 @@ function validateEmail() {
 }
 
 function addContact() {
-    var existingContacts = JSON.parse(localStorage.getItem(allContacts));
-    if (existingContacts == null) existingContacts = [];
-   
+    var existingContacts = JSON.parse(localStorage.getItem(allContactsKey));
+
     var newContact = {
         "name": document.getElementById('name').value,
         "mobile": document.getElementById('mobile').value,
         "email": document.getElementById('email').value
     };
-    existingContacts.push(newContact);
-    localStorage.setItem(allContacts, JSON.stringify(existingContacts));
+    if(existingContacts) {
+        existingContacts.push(newContact);
+    }
+    else {
+        existingContacts = [];
+        existingContacts.push(newContact);
+    }
+    
+    localStorage.setItem(allContactsKey, JSON.stringify(existingContacts));
+
 }
 
 function render() {
-    var parsedContact = JSON.parse(localStorage.getItem(allContacts));
-    if(parsedContact === null) {
+    //TO DO: Make a getAllContacts function for retrieving contacts from the localstorage
+    const parsedContacts = JSON.parse(localStorage.getItem(allContactsKey));
+    if(parsedContacts === null) {
         console.log('no contacts');
     } else {
-    parsedContact.forEach(function(contact) {
-        document.getElementById('trBody').insertAdjacentHTML('afterend', '<th>' + contact.name + '</th><th>' + contact.mobile + '</th><th>' + contact.email + '</th>');
+
+    var existingTableBody = document.getElementById('rowBody');
+    existingTableBody.innerHTML = '';
+    parsedContacts.forEach(function(retrievedContact) {
+        existingTableBody.innerHTML = '<tr><td>' + retrievedContact.name + '</td><td>' + retrievedContact.mobile + '</td><td>' + retrievedContact.email + '</td><tr>';
      });
     }
 };
@@ -75,7 +106,6 @@ function clearInputs() {
     document.getElementById("name").value = '';
     document.getElementById("mobile").value = '';
     document.getElementById("email").value = '';
-    localStorage.clear();
 }
 
 function sort() {
