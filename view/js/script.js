@@ -109,7 +109,7 @@ function render() {
     var existingTableBody = document.getElementById('rowBody');
     existingTableBody.innerHTML = '';
     allContacts.forEach(function(retrievedContact) {
-        existingTableBody.innerHTML = '<tr><td>' + retrievedContact.name + '</td><td>' + retrievedContact.mobile + '</td><td>' + retrievedContact.email + '</td><tr>';
+        existingTableBody.innerHTML += '<tr><td>' + retrievedContact.name + '</td><td>' + retrievedContact.mobile + '</td><td>' + retrievedContact.email + '</td><tr>';
      });
     
 };
