@@ -23,12 +23,14 @@ document.getElementById("nameFilter").addEventListener("click", sort);
 
 function submit() {
     if(validateInputs()) {
-        addContact(); // TODO: need to pass in the validated new contact
+        console.log(validName());
+        addContact(validName(),validMobile(),validEmail()); // TODO: need to pass in the validated new contact
         clearInputs();
         render();
+        console.log(pullInputValues(name));
     }
     else {
-        displayError('There was a validation error'); // TODO: Add error message function, and pass it a message
+         //Not sure if I should have a generic validation error message or specefic messages where validation failed.
     }
 }
 
@@ -44,51 +46,60 @@ function getAllContact() {
 function displayError(message) {
     const errorDisplay = document.getElementById('error');
     errorDisplay.setAttribute('style', 'display:block!important;');
-    errorDislay.textContent = message;
+    errorDisplay.innerHTML = message;
+}
 
+function pullInputValues() {
+    //not totally sure how this functon should work
+    //I want to store the inputs as values so I can pass them
+    //through validation but also in addContact()
+    const name = document.getElementById('name').value
+    const mobile = document.getElementById('mobile').value
+    const email = document.getElementById('email').value
 }
 
 function validateInputs() {
-    if (validateName() === false || validateMobile() === false || validateEmail() === false) {
+    if (validName() === false || validMobile() === false || validEmail() === false) {
         return false;
-        // 
     } else {
         const errorDisplay = document.getElementById('error'); 
         errorDisplay.setAttribute('style', 'display:hidden!important;');
-
         return true;
 
     }
 }
 
-function validateName() {
+function validName() {
     const firstName = document.getElementById('name').value;
     if (nameRegex.test(firstName) === true)
-        return true;
+        return firstName;
+    displayError('Please enter a valid name');
     return false;
 }
 
-function validateMobile() {
+function validMobile() {
     const mobile = document.getElementById('mobile').value;
     if (mobileRegex.test(mobile) === true)
-        return true;
+        return mobile;
+    displayError('Please enter a valid number');
     return false;
 }
 
-function validateEmail() {
+function validEmail() {
     const email = document.getElementById('email').value;
     if (emailRegex.test(email) === true)
-        return true;
+        return email;
+    displayError('Please enter a valid email');
     return false;
 }
 
-function addContact() {
+function addContact(name, mobile, email) {
     var existingContacts = JSON.parse(localStorage.getItem(allContactsKey));
 
     var newContact = {
-        "name": document.getElementById('name').value,
-        "mobile": document.getElementById('mobile').value,
-        "email": document.getElementById('email').value
+        "name": name,
+        "mobile": mobile,
+        "email": email
     };
     if(existingContacts) {
         existingContacts.push(newContact);
@@ -99,17 +110,14 @@ function addContact() {
     }
     
     localStorage.setItem(allContactsKey, JSON.stringify(existingContacts));
-
 }
 
 function render() {
-    //TO DO: Make a getAllContacts function for retrieving contacts from the localstorage
     var allContacts = getAllContact();
-
     var existingTableBody = document.getElementById('rowBody');
     existingTableBody.innerHTML = '';
     allContacts.forEach(function(retrievedContact) {
-        existingTableBody.innerHTML += '<tr><td>' + retrievedContact.name + '</td><td>' + retrievedContact.mobile + '</td><td>' + retrievedContact.email + '</td><tr>';
+        existingTableBody.innerHTML += '<td>' + retrievedContact.name + '</td><td>' + retrievedContact.mobile + '</td><td>' + retrievedContact.email + '</td>';
      });
     
 };

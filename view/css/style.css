@@ -10,7 +10,7 @@ body {
 }
 
 .error {
-  color: #e5e5e4;
+  color: #de3331;
   display: none!important;
 }
 
@@ -167,6 +167,6 @@ th {
   background-color: #fff;
 }
 
-/*#summaryTable {
+#summaryTable {
   display:none;
-}*/
+}
