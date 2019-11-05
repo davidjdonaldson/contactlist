@@ -4,25 +4,18 @@ const emailRegex = new RegExp('@');
 
 // Setting up the table here because it was generating multiple tables on the render method each time it was called.
 document.getElementById('contactSummary').insertAdjacentHTML('afterend', '<table id="contactsTable"><thead><tr><th id="nameFilter">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody id="rowBody"><tr id="trBody">');
-document.getElementById('trBody').insertAdjacentHTML('beforeend', '</tr></tbody></table>'); //TODO Get these into variabels
+document.getElementById('trBody').insertAdjacentHTML('beforeend', '</tr></tbody></table>');
 
 var allContactsKey = 'allContacts'
-//Loading all contacts and rendering them
+
+//Displaying the existing contact list saved in local storage
 window.onload = function() {
   if(getAllContact() == null) {
     console.log('no contacts');
 } else {
-    
+    render();
 }
 };
-
-function getAllContact() {
-    const parsedContacts = JSON.parse(localStorage.getItem(allContactsKey));
-    if(parsedContacts === null) {
-        console.log('no contacts');
-        } else {
-     return parsedContacts
-}
 
 //Waiting for clicks
 document.getElementById("submit").addEventListener("click", submit);
@@ -36,6 +29,15 @@ function submit() {
     }
     else {
         displayError('There was a validation error'); // TODO: Add error message function, and pass it a message
+    }
+}
+
+function getAllContact() {
+    const parsedContacts = JSON.parse(localStorage.getItem(allContactsKey));
+    if(parsedContacts === null) {
+        console.log('no contacts');
+        } else {
+     return parsedContacts
     }
 }
 
@@ -97,22 +99,19 @@ function addContact() {
     }
     
     localStorage.setItem(allContactsKey, JSON.stringify(existingContacts));
+
 }
 
 function render() {
     //TO DO: Make a getAllContacts function for retrieving contacts from the localstorage
-    // const parsedContacts = JSON.parse(localStorage.getItem(allContactsKey));
-    // if(parsedContacts === null) {
-    //     console.log('no contacts');
-    // } else {
-    var contactsToPrint = getAllContact();
-    console.log(contactsToPrint);
+    var allContacts = getAllContact();
+
     var existingTableBody = document.getElementById('rowBody');
     existingTableBody.innerHTML = '';
-    contactsToPrint.forEach(function(retrievedContact) {
+    allContacts.forEach(function(retrievedContact) {
         existingTableBody.innerHTML = '<tr><td>' + retrievedContact.name + '</td><td>' + retrievedContact.mobile + '</td><td>' + retrievedContact.email + '</td><tr>';
      });
-    }
+    
 };
 
 function clearInputs() {
@@ -122,5 +121,5 @@ function clearInputs() {
 }
 
 function sort() {
- 
+   
 }
