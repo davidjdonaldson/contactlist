@@ -23,8 +23,7 @@ document.getElementById("nameFilter").addEventListener("click", sort);
 
 function submit() {
     if(validateInputs()) {
-        console.log(validName());
-        addContact(validName(),validMobile(),validEmail()); // TODO: need to pass in the validated new contact
+        addContact(validName(),validMobile(),validEmail());
         clearInputs();
         render();
         console.log(pullInputValues(name));
@@ -47,15 +46,6 @@ function displayError(message) {
     const errorDisplay = document.getElementById('error');
     errorDisplay.setAttribute('style', 'display:block!important;');
     errorDisplay.innerHTML = message;
-}
-
-function pullInputValues() {
-    //not totally sure how this functon should work
-    //I want to store the inputs as values so I can pass them
-    //through validation but also in addContact()
-    const name = document.getElementById('name').value
-    const mobile = document.getElementById('mobile').value
-    const email = document.getElementById('email').value
 }
 
 function validateInputs() {
