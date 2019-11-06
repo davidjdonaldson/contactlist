@@ -179,7 +179,3 @@ tbody tr:nth-child(even) {
 th {
   background-color: #fff;
 }
-
-#summaryTable {
-  display:none;
-}
