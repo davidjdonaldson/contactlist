@@ -117,9 +117,10 @@ function clearInputs() {
 function sort() {
 var contactsToSort = getAllContact();
 console.log(contactsToSort);
-contactsToSort.sort(function(a, b) {
-  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+
+contactsToSort.sort(function(asc, dsc) {
+  var nameA = asc.name.toUpperCase(); // ignore upper and lowercase
+  var nameB = dsc.name.toUpperCase(); // ignore upper and lowercase
   if (nameA < nameB) {
     return -1;
   }
@@ -129,5 +130,4 @@ contactsToSort.sort(function(a, b) {
     // names must be equal
   return 0;
 });
-
 }
