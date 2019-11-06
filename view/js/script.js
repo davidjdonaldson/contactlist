@@ -130,4 +130,6 @@ contactsToSort.sort(function(asc, dsc) {
     // names must be equal
   return 0;
 });
+var sortedContacts = contactsToSort;
+return sortedContacts;
 }
