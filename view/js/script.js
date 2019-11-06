@@ -2,8 +2,9 @@ const nameRegex = new RegExp('[A-Za-z_]{1,20}');
 const mobileRegex = new RegExp('^[0-9]{10,10}$');
 const emailRegex = new RegExp('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$');
 
+
 // Setting up the table here because it was generating multiple tables on the render method each time it was called.
-document.getElementById('contactSummary').insertAdjacentHTML('afterend', '<table id="contactsTable"><thead><tr><th id="nameFilter">Name</th><th>Mobile</th><th>Email</th></tr></thead><tbody id="rowBody"><tr id="trBody">');
+document.getElementById('contactSummary').insertAdjacentHTML('afterend', '<table id="contactsTable"><thead><tr><th id="nameFilter"><span id="clickName">Name</span><span id="arrowBody"><i id="clickAsc" class="fas fa-sort-up"></i><i id="clickDesc" class="fas fa-sort-down"></i></span></th><th>Mobile</th><th>Email</th></tr></thead><tbody id="rowBody"><tr id="trBody">');
 document.getElementById('trBody').insertAdjacentHTML('beforeend', '</tr></tbody></table>');
 
 var allContactsKey = 'allContacts'
@@ -19,7 +20,9 @@ window.onload = function() {
 
 //Waiting for clicks
 document.getElementById("submit").addEventListener("click", submit);
-document.getElementById("nameFilter").addEventListener("click", sort);
+document.getElementById("clickName").addEventListener("click", sort,'name');
+document.getElementById("clickAsc").addEventListener("click", sort, 'name');
+document.getElementById("clickDesc").addEventListener("click", sort, '-name');
 
 function submit() {
     if(validateInputs()) {
@@ -114,22 +117,24 @@ function clearInputs() {
     document.getElementById("email").value = '';
 }
 
-function sort() {
-var contactsToSort = getAllContact();
-console.log(contactsToSort);
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
 
-contactsToSort.sort(function(asc, dsc) {
-  var nameA = asc.name.toUpperCase(); // ignore upper and lowercase
-  var nameB = dsc.name.toUpperCase(); // ignore upper and lowercase
-  if (nameA < nameB) {
-    return -1;
-  }
-  if (nameA > nameB) {
-    return 1;
-  }
-    // names must be equal
-  return 0;
-});
-var sortedContacts = contactsToSort;
-return sortedContacts;
+    return function (a,b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+}
+
+function sort(name) {
+var contactsToSort = getAllContact();
+contactsToSort.sort(dynamicSort(name));
+console.log(contactsToSort);
 }
