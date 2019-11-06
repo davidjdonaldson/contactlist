@@ -136,5 +136,5 @@ function dynamicSort(property) {
 function sort(name) {
 var contactsToSort = getAllContact();
 contactsToSort.sort(dynamicSort(name));
-console.log(contactsToSort);
+getAllContact() = contactsToSort;
 }
